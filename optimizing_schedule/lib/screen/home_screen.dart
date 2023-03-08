@@ -24,7 +24,11 @@ class HomeScreen extends StatelessWidget {
         children: [
           Schedule(),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => Optimizing_Schedult());
+            },
             child: Text('가능한 시간표 검색'),
           ),
         ],

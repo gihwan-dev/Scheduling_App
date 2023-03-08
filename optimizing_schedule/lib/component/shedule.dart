@@ -16,8 +16,11 @@ List week = [
   '금',
 ];
 
+List check_schedule =
+    List.generate(10, (index) => List.generate(6, (index) => 0));
+
 class Subject {
-  Map<String, int> time = {};
+  List time = [];
   String title = '';
   int score = 0;
 }
