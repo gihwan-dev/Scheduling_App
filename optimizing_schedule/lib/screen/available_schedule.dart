@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:optimizing_schedule/component/adding_subjects.dart';
 
-List check_schedule =
-    List.generate(10, (index) => List.generate(6, (index) => 0));
+List<Subject> EssentialSubjectList = [];
+List<Subject> WantToSubjectList = [];
+List<Subject> CanSubjectList = [];
 
 class Optimizing_Schedult extends StatefulWidget {
-  const Optimizing_Schedult({super.key});
+  const Optimizing_Schedult({
+    super.key,
+  });
 
   @override
   State<Optimizing_Schedult> createState() => _Optimizing_SchedultState();
 }
 
 class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
-  bool saveChecked = false;
+  int checkState = 1;
 
-  void savedCheckedfuntion() {
+  void savedCheckedfuntion(Subject newSubject) {
     setState(() {
-      saveChecked = !saveChecked;
+      if (checkState == 1) {
+        EssentialSubjectList.add(newSubject);
+      } else if (checkState == 2) {
+        WantToSubjectList.add(newSubject);
+      } else {
+        CanSubjectList.add(newSubject);
+      }
     });
   }
 
-  int checkState = 1;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -39,7 +47,9 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                     onPressed: () {
                       showDialog(
                           context: context,
-                          builder: (BuildContext context) => AddingSubjects());
+                          builder: (BuildContext context) => AddingSubjects(
+                                savedCheckedfuntion: savedCheckedfuntion,
+                              ));
                     },
                     child: Text(checkState == 1
                         ? '필수과목 추가하기'
@@ -53,7 +63,9 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   height: 400,
-                  child: ListView(),
+                  child: ListView(
+                    children: [...displaySubject()],
+                  ),
                 ),
               ),
               Expanded(
@@ -83,5 +95,44 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
             ],
           )),
     );
+  }
+
+  List displaySubject() {
+    if (checkState == 1) {
+      return List.generate(EssentialSubjectList.length, (index) {
+        return ListTile(
+          title: Text('${EssentialSubjectList[index].title}'),
+          subtitle: Text('${EssentialSubjectList[index].time}'),
+          onLongPress: () {
+            removeTime(EssentialSubjectList[index].time);
+            setState(() {
+              EssentialSubjectList.removeAt(index);
+            });
+          },
+        );
+      });
+    } else if (checkState == 2) {
+      return List.generate(WantToSubjectList.length, (index) {
+        return ListTile(
+          title: Text('${WantToSubjectList[index].title}'),
+          subtitle: Text('${WantToSubjectList[index].time}'),
+          onLongPress: () {
+            setState(() {
+              WantToSubjectList.removeAt(index);
+            });
+          },
+        );
+      });
+    } else {
+      return List.generate(CanSubjectList.length, (index) {
+        return ListTile(
+          title: Text('${CanSubjectList[index].title}'),
+          subtitle: Text('${CanSubjectList[index].time}'),
+          onLongPress: () {
+            CanSubjectList.removeAt(index);
+          },
+        );
+      });
+    }
   }
 }
