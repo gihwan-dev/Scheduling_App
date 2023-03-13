@@ -5,6 +5,10 @@ List<Subject> EssentialSubjectList = [];
 List<Subject> WantToSubjectList = [];
 List<Subject> CanSubjectList = [];
 
+class ResultSubject {
+  List subjects = [];
+}
+
 class Optimizing_Schedult extends StatefulWidget {
   const Optimizing_Schedult({
     super.key,
