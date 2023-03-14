@@ -29,14 +29,9 @@ const time_template = {
 List check_schedule =
     List.generate(10, (index) => List.generate(6, (index) => 0));
 
-class Subject {
-  List time = [];
-  String title = '';
-  int score = 0;
-}
-
 class Schedule extends StatefulWidget {
-  Schedule({super.key});
+  Schedule({required this.curSubject, super.key});
+  final List<Subject> curSubject;
   // List<scheduleDetail>? subjectList = [];
   @override
   State<Schedule> createState() => _ScheduleState();
@@ -52,10 +47,10 @@ class _ScheduleState extends State<Schedule> {
     setState(() {
       testSubject.title = '인공지능';
       testSubject.time = [
-        ['목', 10],
-        ['금', 12]
+        ['목', '10'],
+        ['금', '12']
       ];
-      testSubject.score = 2;
+      testSubject.score = '2';
     });
   }
 
@@ -81,7 +76,11 @@ class _ScheduleState extends State<Schedule> {
           child: Stack(
             children: [
               scheduleMaker(textCheck),
-              scheduleMaker(subjectChecker, eachSubject: testSubject),
+              // scheduleMaker(subjectChecker, eachSubject: testSubject),
+              ...List.generate(widget.curSubject.length, (index) {
+                return scheduleMaker(subjectChecker,
+                    eachSubject: widget.curSubject[index]);
+              })
             ],
           ),
         ),
@@ -89,7 +88,7 @@ class _ScheduleState extends State<Schedule> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '학점: 20.0',
+              '학점: ',
             ),
             IconButton(
               onPressed: () {},
@@ -175,7 +174,7 @@ class _ScheduleState extends State<Schedule> {
       } else {
         for (int i = 0; i < eachSubject.time.length; i++) {
           if (time_template[eachSubject.time[i][0]] == dayIndex &&
-              eachSubject.time[i][1] == hourIndex + 8) {
+              int.parse(eachSubject.time[i][1]) == hourIndex + 8) {
             return Container(
               decoration: BoxDecoration(color: Colors.pink),
               height: 30,

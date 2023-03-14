@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:optimizing_schedule/component/adding_subjects.dart';
 import 'package:optimizing_schedule/component/shedule.dart';
 import 'available_schedule.dart';
+
+List<Subject> temp = [];
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -22,7 +25,9 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Schedule(),
+          Schedule(
+            curSubject: [],
+          ),
           ElevatedButton(
             onPressed: () {
               showDialog(
