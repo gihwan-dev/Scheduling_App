@@ -87,10 +87,12 @@ void removeTime(List curTime) {
 
 class AddingSubjects extends StatefulWidget {
   const AddingSubjects({
+    required this.stateCheck,
     required this.savedCheckedfuntion,
     super.key,
   });
 
+  final int stateCheck;
   final savedCheckedfuntion;
 
   @override
@@ -208,7 +210,40 @@ class _AddingSubjectsState extends State<AddingSubjects> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  if (checkTime(curTime)) {
+                  if (widget.stateCheck == 1) {
+                    if (checkTime(curTime)) {
+                      Subject temp = new Subject();
+                      temp.title = title;
+                      temp.score = score;
+                      curTime.forEach((element) {
+                        temp.time.add(element);
+                      });
+                      curTime = [];
+                      widget.savedCheckedfuntion(temp);
+                      Navigator.pop(context);
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Container(
+                              width: 100,
+                              height: 50,
+                              child: AlertDialog(
+                                title: Text('필수과목은 시간이 겹칠 수 없습니다.'),
+                                content: Text('겹치지 않게 선택해 주세요.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('확인'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                    }
+                  } else {
                     Subject temp = new Subject();
                     temp.title = title;
                     temp.score = score;
@@ -218,27 +253,6 @@ class _AddingSubjectsState extends State<AddingSubjects> {
                     curTime = [];
                     widget.savedCheckedfuntion(temp);
                     Navigator.pop(context);
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (_) {
-                          return Container(
-                            width: 100,
-                            height: 50,
-                            child: AlertDialog(
-                              title: Text('필수과목은 시간이 겹칠 수 없습니다.'),
-                              content: Text('겹치지 않게 선택해 주세요.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('확인'),
-                                ),
-                              ],
-                            ),
-                          );
-                        });
                   }
                 });
               },

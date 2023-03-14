@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:optimizing_schedule/component/adding_subjects.dart';
+import 'package:optimizing_schedule/component/show_result.dart';
+import 'package:optimizing_schedule/component/dfs.dart';
 
 List<Subject> EssentialSubjectList = [];
 List<Subject> WantToSubjectList = [];
@@ -52,6 +54,7 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) => AddingSubjects(
+                                stateCheck: checkState,
                                 savedCheckedfuntion: savedCheckedfuntion,
                               ));
                     },
@@ -88,6 +91,13 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                       } else {
                         setState(() {
                           Navigator.pop(context);
+                          dfs(essentailSubjectCheck, WantToSubjectList,
+                              CanSubjectList, 0, 0, [], 0);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ShowResult();
+                              });
                           checkState = 1;
                         });
                       }
