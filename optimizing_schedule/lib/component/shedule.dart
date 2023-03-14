@@ -30,8 +30,13 @@ List check_schedule =
     List.generate(10, (index) => List.generate(6, (index) => 0));
 
 class Schedule extends StatefulWidget {
-  Schedule({required this.curSubject, super.key});
+  Schedule({
+    required this.curScore,
+    required this.curSubject,
+    super.key,
+  });
   final List<Subject> curSubject;
+  final int curScore;
   // List<scheduleDetail>? subjectList = [];
   @override
   State<Schedule> createState() => _ScheduleState();
@@ -88,7 +93,7 @@ class _ScheduleState extends State<Schedule> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '학점: ',
+              '학점: ${widget.curScore}',
             ),
             IconButton(
               onPressed: () {},

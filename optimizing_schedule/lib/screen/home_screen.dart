@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           Schedule(
             curSubject: [],
+            curScore: 0,
           ),
           ElevatedButton(
             onPressed: () {

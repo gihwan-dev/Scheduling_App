@@ -17,7 +17,9 @@ class ShowResult extends StatelessWidget {
                 List.generate(resultSubject[index1].subjectList.length,
                     (index2) {
                   return Schedule(
-                      curSubject: resultSubject[index1].subjectList);
+                    curSubject: resultSubject[index1].subjectList,
+                    curScore: resultSubject[index1].score,
+                  );
                 });
               }
               return Placeholder();
