@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:optimizing_schedule/component/adding_subjects.dart';
 import 'package:optimizing_schedule/component/shedule.dart';
 import 'available_schedule.dart';
+import 'package:optimizing_schedule/component/chekingtemplate.dart';
 
 List<Subject> temp = [];
 

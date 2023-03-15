@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'adding_subjects.dart';
 import 'package:optimizing_schedule/screen/available_schedule.dart';
+import 'chekingtemplate.dart';
 
 // class scheduleDetail {
 //   bool? cyber;
@@ -8,23 +9,6 @@ import 'package:optimizing_schedule/screen/available_schedule.dart';
 //   String? subjectName;
 //   int? score;
 // }
-
-List week = [
-  '',
-  '월',
-  '화',
-  '수',
-  '목',
-  '금',
-];
-
-const time_template = {
-  '월': 1,
-  '화': 2,
-  '수': 3,
-  '목': 4,
-  '금': 5,
-};
 
 List check_schedule =
     List.generate(10, (index) => List.generate(6, (index) => 0));
