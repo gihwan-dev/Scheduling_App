@@ -7,7 +7,7 @@ class Subject {
   List time = [];
 }
 
-Map essentailSubjectCheck = {
+Map essentialSubjectCheck = {
   '월': {
     '9': false,
     '10': false,
@@ -86,4 +86,12 @@ const time_template = {
   '금': 5,
 };
 
-List favoriteSubjects = [];
+List<OptimizedSchedule> favoriteSubjects = [];
+
+List<OptimizedSchedule> resultSubject = [];
+
+class OptimizedSchedule {
+  int score = 0;
+  List<Subject> subjectList = [];
+  bool onSaved = false;
+}

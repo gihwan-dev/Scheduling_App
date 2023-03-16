@@ -30,7 +30,7 @@ class Schedule extends StatefulWidget {
 
 class _ScheduleState extends State<Schedule> {
   Subject testSubject = new Subject();
-  Icon savedIcon = Icon(Icons.favorite_border);
+  Icon? savedCheckIcon;
   @override
   void initState() {
     // TODO: implement initState
@@ -82,8 +82,20 @@ class _ScheduleState extends State<Schedule> {
               '학점: ${widget.curScore}',
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.favorite),
+              onPressed: () {
+                setState(() {
+                  if (resultSubject[widget.cur_index].onSaved == false) {
+                    resultSubject[widget.cur_index].onSaved = true;
+                    savedCheckIcon = Icon(Icons.favorite);
+                  } else {
+                    resultSubject[widget.cur_index].onSaved = false;
+                    savedCheckIcon = Icon(Icons.favorite_border);
+                  }
+                });
+              },
+              icon: resultSubject[widget.cur_index].onSaved
+                  ? Icon(Icons.favorite)
+                  : Icon(Icons.favorite_border),
             )
           ],
         )

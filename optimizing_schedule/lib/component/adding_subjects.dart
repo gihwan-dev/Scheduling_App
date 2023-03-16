@@ -4,10 +4,10 @@ import 'chekingtemplate.dart';
 
 bool checkTime(List curTime) {
   for (int i = 0; i < curTime.length; i++) {
-    if (essentailSubjectCheck[curTime[i][0]][curTime[i][1]] == true) {
+    if (essentialSubjectCheck[curTime[i][0]][curTime[i][1]] == true) {
       return false;
     } else {
-      essentailSubjectCheck[curTime[i][0]][curTime[i][1]] = true;
+      essentialSubjectCheck[curTime[i][0]][curTime[i][1]] = true;
     }
   }
   return true;
@@ -15,7 +15,7 @@ bool checkTime(List curTime) {
 
 void removeTime(List curTime) {
   for (int i = 0; i < curTime.length; i++) {
-    essentailSubjectCheck[curTime[i][0]][curTime[i][1]] = false;
+    essentialSubjectCheck[curTime[i][0]][curTime[i][1]] = false;
   }
 }
 

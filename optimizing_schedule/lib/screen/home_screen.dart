@@ -6,9 +6,15 @@ import 'package:optimizing_schedule/component/chekingtemplate.dart';
 
 List<Subject> temp = [];
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  PageController pageController = new PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +31,26 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Schedule(
-            curSubject: [],
-            curScore: 0,
-            cur_index: 0,
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              children: [
+                favoriteSubjects.length == 0
+                    ? Center(child: Text('저장된 시간표가 없습니다. 추가해주세요'))
+                    : Center(child: Text('favorites')),
+                ...List.generate(
+                  favoriteSubjects.length,
+                  (index) {
+                    return Schedule(
+                        curScore: favoriteSubjects[index].score,
+                        curSubject: favoriteSubjects[index].subjectList,
+                        cur_index: index);
+                  },
+                ),
+              ],
+            ),
           ),
           ElevatedButton(
             onPressed: () {

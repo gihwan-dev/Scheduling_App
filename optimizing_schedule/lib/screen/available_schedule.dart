@@ -87,11 +87,15 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                         });
                       } else {
                         Navigator.pop(context);
-                        dfs(essentailSubjectCheck, WantToSubjectList,
-                            CanSubjectList, [], 0, 0, 0);
+                        int essentialTotalScore = 0;
+                        EssentialSubjectList.forEach((element) =>
+                            essentialTotalScore += int.parse(element.score));
+
+                        dfs({...essentialSubjectCheck}, WantToSubjectList,
+                            CanSubjectList, [], essentialTotalScore, 0, 0);
                         EssentialSubjectList.forEach((element) {
                           element.time.forEach((element) {
-                            essentailSubjectCheck[element[0]][element[1]] =
+                            essentialSubjectCheck[element[0]][element[1]] =
                                 false;
                           });
                         });
@@ -99,13 +103,16 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                         WantToSubjectList.clear();
                         CanSubjectList.clear();
                         showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ShowResult();
-                            });
-                        setState(() {
-                          checkState = 1;
-                        });
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ShowResult();
+                          },
+                        );
+                        setState(
+                          () {
+                            checkState = 1;
+                          },
+                        );
                       }
                     },
                     child: Text(checkState == 3 ? '완료' : '다음'),
