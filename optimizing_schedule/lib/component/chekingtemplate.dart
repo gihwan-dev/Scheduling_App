@@ -85,3 +85,5 @@ const time_template = {
   '목': 4,
   '금': 5,
 };
+
+List favoriteSubjects = [];

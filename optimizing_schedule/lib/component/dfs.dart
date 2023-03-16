@@ -17,30 +17,44 @@ void dfs(
   List<Subject> temp,
   int score,
   int idx,
+  int jdx,
 ) {
   List<Subject> cur_temp = [];
 
   for (int i = idx; i < wantToSubject.length; i++) {
     print('dfs is excuted');
     bool wantCheck = wantToSubject[i].time.every((element) {
-      print('${element} is ${subjectCheck[element[0]][element[1]]}.');
-      print('${element[1].runtimeType}');
       return subjectCheck[element[0]][element[1]] == false;
     });
 
     if (wantCheck == true) {
-      print("wantCheck is true");
       wantToSubject[i].time.forEach((element) {
         subjectCheck[element[0]][element[1]] = true;
       });
       cur_temp.add(wantToSubject[i]);
       score += int.parse(wantToSubject[i].score);
-      dfs(subjectCheck, wantToSubject, canDoSubject, cur_temp, score, i + 1);
+      dfs(subjectCheck, wantToSubject, canDoSubject, cur_temp, score, i + 1,
+          jdx);
       wantToSubject[i].time.forEach((element) {
         subjectCheck[element[0]][element[1]] = false;
       });
     }
   }
+
+  for (int j = jdx; j < canDoSubject.length; j++) {
+    bool canCheck = canDoSubject[j].time.every((element) {
+      return subjectCheck[element[0]][element[1]] == false;
+    });
+
+    if (canCheck == true) {
+      cur_temp.add(canDoSubject[j]);
+      score += int.parse(canDoSubject[j].score);
+      canDoSubject[j].time.forEach((element) {
+        subjectCheck[element[0]][element[1]] = false;
+      });
+    }
+  }
+
   OptimizedSchedule optimizedSchedule = new OptimizedSchedule();
   optimizedSchedule.score = score;
   optimizedSchedule.subjectList = [...EssentialSubjectList, ...cur_temp];

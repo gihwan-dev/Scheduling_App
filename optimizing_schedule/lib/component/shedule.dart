@@ -17,10 +17,12 @@ class Schedule extends StatefulWidget {
   Schedule({
     required this.curScore,
     required this.curSubject,
+    required this.cur_index,
     super.key,
   });
   final List<Subject> curSubject;
   final int curScore;
+  final int cur_index;
   // List<scheduleDetail>? subjectList = [];
   @override
   State<Schedule> createState() => _ScheduleState();
@@ -28,7 +30,7 @@ class Schedule extends StatefulWidget {
 
 class _ScheduleState extends State<Schedule> {
   Subject testSubject = new Subject();
-
+  Icon savedIcon = Icon(Icons.favorite_border);
   @override
   void initState() {
     // TODO: implement initState
