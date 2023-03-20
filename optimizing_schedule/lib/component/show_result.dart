@@ -4,7 +4,8 @@ import 'chekingtemplate.dart';
 import 'dfs.dart';
 
 class ShowResult extends StatelessWidget {
-  ShowResult({super.key});
+  ShowResult({required this.resultSavedFunction, super.key});
+  final Function resultSavedFunction;
   PageController pageController = new PageController();
   @override
   Widget build(BuildContext context) {

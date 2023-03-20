@@ -18,6 +18,7 @@ class Optimizing_Schedult extends StatefulWidget {
 }
 
 class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
+  bool checkSavingResult = false;
   int checkState = 1;
 
   void savedCheckedfuntion(Subject newSubject) {
@@ -29,6 +30,12 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
       } else {
         CanSubjectList.add(newSubject);
       }
+    });
+  }
+
+  void resultSavedFunction() {
+    setState(() {
+      checkSavingResult = !checkSavingResult;
     });
   }
 
@@ -105,7 +112,9 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return ShowResult();
+                            return ShowResult(
+                              resultSavedFunction: resultSavedFunction,
+                            );
                           },
                         );
                         setState(
