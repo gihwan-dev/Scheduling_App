@@ -18,11 +18,15 @@ class Schedule extends StatefulWidget {
     required this.curScore,
     required this.curSubject,
     required this.cur_index,
+    required this.updateHomeFunction,
+    required this.resultCheck,
     super.key,
   });
   final List<Subject> curSubject;
   final int curScore;
   final int cur_index;
+  final Function updateHomeFunction;
+  final bool resultCheck;
   // List<scheduleDetail>? subjectList = [];
   @override
   State<Schedule> createState() => _ScheduleState();

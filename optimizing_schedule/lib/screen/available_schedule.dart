@@ -11,8 +11,9 @@ class ResultSubject {
 class Optimizing_Schedult extends StatefulWidget {
   const Optimizing_Schedult({
     super.key,
+    required this.homeUpdateFunction,
   });
-
+  final Function homeUpdateFunction;
   @override
   State<Optimizing_Schedult> createState() => _Optimizing_SchedultState();
 }
@@ -113,7 +114,7 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
                           context: context,
                           builder: (BuildContext context) {
                             return ShowResult(
-                              resultSavedFunction: resultSavedFunction,
+                              updateHomeFuntion: widget.homeUpdateFunction,
                             );
                           },
                         );

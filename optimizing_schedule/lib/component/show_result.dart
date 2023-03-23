@@ -3,10 +3,17 @@ import 'shedule.dart';
 import 'chekingtemplate.dart';
 import 'dfs.dart';
 
-class ShowResult extends StatelessWidget {
-  ShowResult({required this.resultSavedFunction, super.key});
-  final Function resultSavedFunction;
+class ShowResult extends StatefulWidget {
+  ShowResult({required this.updateHomeFuntion, super.key});
+  final Function updateHomeFuntion;
+
+  @override
+  State<ShowResult> createState() => _ShowResultState();
+}
+
+class _ShowResultState extends State<ShowResult> {
   PageController pageController = new PageController();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -23,6 +30,8 @@ class ShowResult extends StatelessWidget {
                     curScore: resultSubject[index1].score,
                     curSubject: resultSubject[index1].subjectList,
                     cur_index: index1,
+                    updateHomeFunction: () {},
+                    resultCheck: true,
                   );
                 },
               ),
@@ -30,6 +39,7 @@ class ShowResult extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
+              widget.updateHomeFuntion();
               resultSubject.forEach(
                 (element) {
                   if (element.onSaved == true) {

@@ -15,54 +15,101 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController pageController = new PageController();
+  bool updateHome = false;
   @override
   Widget build(BuildContext context) {
+    void updateHomeFunction() {
+      setState(() {
+        updateHome = !updateHome;
+        print("Home widget updated");
+      });
+    }
+
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       drawer: myDrawer(),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('시간표 최적화'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.person),
-          ),
-        ],
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(
+            '시간표 마법사',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           Expanded(
             child: PageView(
               controller: pageController,
-              children: [
-                favoriteSubjects.length == 0
-                    ? Center(child: Text('저장된 시간표가 없습니다. 추가해주세요'))
-                    : Center(child: Text('favorites')),
-                ...List.generate(
-                  favoriteSubjects.length,
-                  (index) {
-                    return Schedule(
-                        curScore: favoriteSubjects[index].score,
-                        curSubject: favoriteSubjects[index].subjectList,
-                        cur_index: index);
-                  },
-                ),
-              ],
+              children: [...displaySchdule(updateHomeFunction)],
             ),
           ),
           ElevatedButton(
             onPressed: () {
               showDialog(
-                  context: context,
-                  builder: (BuildContext context) => Optimizing_Schedult());
+                context: context,
+                builder: (BuildContext context) =>
+                    Optimizing_Schedult(homeUpdateFunction: updateHomeFunction),
+              );
             },
             child: Text('가능한 시간표 검색'),
           ),
+          Align(
+              alignment: Alignment.bottomCenter, child: bottomNavigationBar()),
         ],
       ),
     );
+  }
+
+  Row bottomNavigationBar() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
+                color: Theme.of(context).bottomSheetTheme.backgroundColor),
+            child: Center(child: Text('hello')),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(
+            child: Center(child: Text('hello')),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Center(
+            child: Container(
+              child: Text('hello'),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List displaySchdule(Function updateHomeFunction) {
+    if (favoriteSubjects.length == 0) {
+      return [
+        Center(
+          child: Text('저장된 시간표가 없습니다. 추가해주세요.'),
+        )
+      ];
+    } else {
+      return List.generate(
+        favoriteSubjects.length,
+        (index) {
+          return Schedule(
+            curScore: favoriteSubjects[index].score,
+            curSubject: favoriteSubjects[index].subjectList,
+            cur_index: index,
+            updateHomeFunction: updateHomeFunction,
+            resultCheck: false,
+          );
+        },
+      );
+    }
   }
 
   Drawer myDrawer() {
