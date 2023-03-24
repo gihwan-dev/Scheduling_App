@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'adding_subjects.dart';
 import 'package:optimizing_schedule/screen/available_schedule.dart';
 import 'chekingtemplate.dart';
+import 'package:optimizing_schedule/component/schdule_color.dart';
 
 // class scheduleDetail {
 //   bool? cyber;
@@ -53,19 +54,30 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 20,
+        ),
         Container(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-          child: Text(
-            'Favorites Schedule',
-            style: TextStyle(
-              fontSize: 30,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            color: Color.fromRGBO(98, 205, 255, 1),
+          ),
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Center(
+            child: Text(
+              'Favorites Schedule',
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
           ),
         ),
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            border: Border.all(color: Colors.black),
+            color: Color.fromRGBO(98, 205, 255, 1),
           ),
           padding: EdgeInsets.all(8.0),
           child: Stack(
@@ -74,7 +86,8 @@ class _ScheduleState extends State<Schedule> {
               // scheduleMaker(subjectChecker, eachSubject: testSubject),
               ...List.generate(widget.curSubject.length, (index) {
                 return scheduleMaker(subjectChecker,
-                    eachSubject: widget.curSubject[index]);
+                    eachSubject: widget.curSubject[index],
+                    color: colors[index]);
               })
             ],
           ),
@@ -87,6 +100,7 @@ class _ScheduleState extends State<Schedule> {
             ),
             IconButton(
               onPressed: () {
+                widget.updateHomeFunction();
                 setState(() {
                   if (resultSubject[widget.cur_index].onSaved == false) {
                     resultSubject[widget.cur_index].onSaved = true;
@@ -107,7 +121,7 @@ class _ScheduleState extends State<Schedule> {
     );
   }
 
-  Container textCheck(hourIndex, dayIndex, Subject? eachSubject) {
+  Container textCheck(hourIndex, dayIndex, Subject? eachSubject, Color? color) {
     if (hourIndex == 0) {
       return Container(
         height: 20,
@@ -133,9 +147,9 @@ class _ScheduleState extends State<Schedule> {
   }
 
   Table scheduleMaker(Function makingTableContent,
-      {Subject? eachSubject = null}) {
+      {Subject? eachSubject = null, Color? color}) {
     return Table(
-      border: TableBorder.all(),
+      border: TableBorder.all(color: Colors.white),
       columnWidths: const <int, TableColumnWidth>{
         0: FlexColumnWidth(1),
         1: FlexColumnWidth(3),
@@ -148,16 +162,25 @@ class _ScheduleState extends State<Schedule> {
         return TableRow(
             children: List.generate(6, (dayIndex) {
           return TableCell(
-            child: makingTableContent(hourIndex, dayIndex, eachSubject),
+            child: makingTableContent(
+              hourIndex,
+              dayIndex,
+              eachSubject,
+              color,
+            ),
           );
         }));
       }),
     );
   }
 
-  Container subjectChecker(hourIndex, dayIndex, Subject? eachSubject) {
+  Container subjectChecker(
+      hourIndex, dayIndex, Subject? eachSubject, Color? color) {
     if (hourIndex == 0) {
       return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+        ),
         height: 20,
         child: Center(
           child: Text('${week[dayIndex]}'),
@@ -165,6 +188,9 @@ class _ScheduleState extends State<Schedule> {
       );
     } else if (dayIndex == 0) {
       return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white),
+        ),
         height: 30,
         child: Center(
           child: Text('${hourIndex + 8}'),
@@ -173,17 +199,28 @@ class _ScheduleState extends State<Schedule> {
     } else {
       if (eachSubject == null) {
         return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+          ),
           height: 30,
           child: Center(
             child: Text(''),
           ),
         );
       } else {
+        if (count_color >= colors.length) {
+          count_color = 0;
+        }
         for (int i = 0; i < eachSubject.time.length; i++) {
           if (time_template[eachSubject.time[i][0]] == dayIndex &&
               int.parse(eachSubject.time[i][1]) == hourIndex + 8) {
             return Container(
-              decoration: BoxDecoration(color: Colors.pink),
+              decoration: BoxDecoration(
+                color: color,
+                border: Border.all(
+                  color: Colors.white,
+                ),
+              ),
               height: 30,
               child: Center(
                 child: Text('${eachSubject.title}'),
@@ -192,6 +229,9 @@ class _ScheduleState extends State<Schedule> {
           }
         }
         return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+          ),
           height: 30,
           child: Center(
             child: Text(''),

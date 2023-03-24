@@ -26,23 +26,33 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(98, 205, 255, 1),
+        centerTitle: true,
+        title: Text('내생에 최고의 시간표'),
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+        ],
+      ),
+      backgroundColor: Color.fromRGBO(201, 238, 255, 1),
       drawer: myDrawer(),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            '시간표 마법사',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
           Expanded(
+            flex: 3,
             child: PageView(
               controller: pageController,
               children: [...displaySchdule(updateHomeFunction)],
             ),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromRGBO(170, 119, 255, 1),
+              shadowColor: Colors.black,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -50,42 +60,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     Optimizing_Schedult(homeUpdateFunction: updateHomeFunction),
               );
             },
-            child: Text('가능한 시간표 검색'),
-          ),
-          Align(
-              alignment: Alignment.bottomCenter, child: bottomNavigationBar()),
-        ],
-      ),
-    );
-  }
-
-  Row bottomNavigationBar() {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20)),
-                color: Theme.of(context).bottomSheetTheme.backgroundColor),
-            child: Center(child: Text('hello')),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            child: Center(child: Text('hello')),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Center(
-            child: Container(
-              child: Text('hello'),
+            child: Text(
+              '가능한 시간표 검색',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
             ),
           ),
-        ),
-      ],
+          SizedBox(
+            height: 50,
+          )
+        ],
+      ),
     );
   }
 
@@ -117,10 +102,23 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('rlghks358'),
-            accountEmail: Text('rlghks358@naver.com'),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(98, 205, 255, 1),
+            ),
+            accountName: Text(
+              'rlghks358',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            accountEmail: Text(
+              'rlghks358@naver.com',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.black,
             ),
           ),
           ListTile(

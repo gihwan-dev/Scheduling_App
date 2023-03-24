@@ -43,94 +43,106 @@ class _Optimizing_SchedultState extends State<Optimizing_Schedult> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Color.fromRGBO(201, 238, 255, 1),
       child: Container(
-          width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: TextButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AddingSubjects(
-                                stateCheck: checkState,
-                                savedCheckedfuntion: savedCheckedfuntion,
-                              ));
-                    },
-                    child: Text(checkState == 1
+        width: 300,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(170, 119, 255, 1),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AddingSubjects(
+                              stateCheck: checkState,
+                              savedCheckedfuntion: savedCheckedfuntion,
+                            ));
+                  },
+                  child: Text(
+                    checkState == 1
                         ? '필수과목 추가하기'
                         : (checkState == 2
                             ? '듣고싶은 과목 추가하기'
-                            : '들을 수 있는 과목 추가하기')),
+                            : '들을 수 있는 과목 추가하기'),
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 400,
-                  child: ListView(
-                    children: [...displaySubject()],
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 400,
+                child: ListView(
+                  children: [...displaySubject()],
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: TextButton(
-                    onPressed: () {
-                      if (checkState == 1) {
-                        setState(() {
-                          checkState = 2;
-                        });
-                      } else if (checkState == 2) {
-                        setState(() {
-                          checkState = 3;
-                        });
-                      } else {
-                        Navigator.pop(context);
-                        int essentialTotalScore = 0;
-                        EssentialSubjectList.forEach((element) =>
-                            essentialTotalScore += int.parse(element.score));
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: TextButton(
+                  onPressed: () {
+                    if (checkState == 1) {
+                      setState(() {
+                        checkState = 2;
+                      });
+                    } else if (checkState == 2) {
+                      setState(() {
+                        checkState = 3;
+                      });
+                    } else {
+                      Navigator.pop(context);
+                      int essentialTotalScore = 0;
+                      EssentialSubjectList.forEach((element) =>
+                          essentialTotalScore += int.parse(element.score));
 
-                        dfs({...essentialSubjectCheck}, WantToSubjectList,
-                            CanSubjectList, [], essentialTotalScore, 0, 0);
-                        EssentialSubjectList.forEach((element) {
-                          element.time.forEach((element) {
-                            essentialSubjectCheck[element[0]][element[1]] =
-                                false;
-                          });
+                      dfs({...essentialSubjectCheck}, WantToSubjectList,
+                          CanSubjectList, [], essentialTotalScore, 0, 0);
+                      EssentialSubjectList.forEach((element) {
+                        element.time.forEach((element) {
+                          essentialSubjectCheck[element[0]][element[1]] = false;
                         });
-                        EssentialSubjectList.clear();
-                        WantToSubjectList.clear();
-                        CanSubjectList.clear();
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ShowResult(
-                              updateHomeFuntion: widget.homeUpdateFunction,
-                            );
-                          },
-                        );
-                        setState(
-                          () {
-                            checkState = 1;
-                          },
-                        );
-                      }
-                    },
-                    child: Text(checkState == 3 ? '완료' : '다음'),
-                  ),
+                      });
+                      EssentialSubjectList.clear();
+                      WantToSubjectList.clear();
+                      CanSubjectList.clear();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ShowResult(
+                            updateHomeFuntion: widget.homeUpdateFunction,
+                          );
+                        },
+                      );
+                      setState(
+                        () {
+                          checkState = 1;
+                        },
+                      );
+                    }
+                  },
+                  child: Text(checkState == 3 ? '완료' : '다음'),
                 ),
               ),
-            ],
-          )),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
